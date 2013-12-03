@@ -18,26 +18,19 @@ namespace GodGame
             Dead
         }
 
-        private Texture2D _texture;
-        private Rectangle _drawRectangle;
-        private int _x;
-        private int _y;
+        private const int CORPSE_TO_SKELETON_TIME_MS = 1800000;
+
         private State _state;
         private float _speedPerMs = 0.013F;
         private Vector2 _direction;
         private bool _directionSet = false;
         private int _elapsedMiliseconds = 0;
         private bool _buttonPressed = false;
-        private Game1 _parent;
+        private int _timeAsCorpse = 0;
 
-        public Follower(ContentManager contentManager, int x, int y, Game1 parent)
+        public Follower(ContentManager contentManager, int x, int y, Game1 parent): base (contentManager, x, y, parent, "Follower")
         {
-            _texture = contentManager.Load<Texture2D>("Follower");
-            _drawRectangle = new Rectangle(x - _texture.Width / 2, y - _texture.Height / 2, _texture.Width, _texture.Height);
-            _x = x;
-            _y = y;
             _state = State.Wandering;
-            _parent = parent;
         }
 
         public override void Update(GameTime gameTime, MouseState mouse)
@@ -112,6 +105,12 @@ namespace GodGame
                     }
                     break;
                 case State.Dead:
+                    _timeAsCorpse += gameTime.ElapsedGameTime.Milliseconds;
+                    if (_timeAsCorpse >= CORPSE_TO_SKELETON_TIME_MS)
+                    {
+                        _parent.RemoveObject(this);
+                        _parent.AddObject(new Skeleton(_parent.Content, _x, _y, _parent));
+                    }
                     break;
             }
 

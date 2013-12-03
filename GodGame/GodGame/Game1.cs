@@ -129,12 +129,17 @@ namespace GodGame
 
         public void Smight(int x, int y)
         {
-            gameObjectsToAdd.Add(new Lightning(Content, x, y, this));
+            AddObject(new Lightning(Content, x, y, this));
         }
 
         public void RemoveObject(GameObject objectToRemove)
         {
             gameObjectsToRemove.Add(objectToRemove);
+        }
+
+        public void AddObject(GameObject objectToAdd)
+        {
+            gameObjectsToAdd.Add(objectToAdd);
         }
     }
 }

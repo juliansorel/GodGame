@@ -15,22 +15,15 @@ namespace GodGame
         private const int HEIGHT = 50;
         private const int FRAME_TIME = 50;
 
-
-        private Texture2D _texture;
-        private Rectangle _drawRectange;
         private Rectangle _sourceRectange;
 
         private int _animationTime = 0;
         private int _frame = 0;
 
-        private Game1 _parent;
-
-        public Lightning(ContentManager content, int x, int y, Game1 parent)
+        public Lightning(ContentManager content, int x, int y, Game1 parent) : base (content, x, y, parent, "SmiteRed")
         {
-            _texture = content.Load<Texture2D>("SmiteRed");
             _sourceRectange = new Rectangle(0, 0, WIDTH, HEIGHT);
-            _drawRectange = new Rectangle(x - WIDTH/2 , y - HEIGHT, WIDTH, HEIGHT);
-            _parent = parent;
+            _drawRectangle = new Rectangle(x - WIDTH / 2, y - HEIGHT, WIDTH, HEIGHT);
         }
 
         public override void Update(GameTime gameTime, MouseState mouse)
@@ -48,10 +41,6 @@ namespace GodGame
                 _sourceRectange.X = WIDTH * _frame;
             }
 
-        }
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(_texture, _drawRectange, _sourceRectange, Color.White);
         }
     }
 }
